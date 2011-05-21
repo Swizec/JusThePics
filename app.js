@@ -129,6 +129,7 @@ app.get('/data/tweets', function (req, res) {
                                            unshortener.expand(url, function (url) {
                                                console.log(url.href);
                                                tweet.image_link = url.href;
+                                               tweet.image_url = '';
                                                users[userId].now.show_tweets([tweet]);
                                            });
                                        }});
@@ -146,6 +147,10 @@ everyone.now.initiate = function (callback) {
 
     users[this.user.clientId] = group;
     callback(this.user.clientId);
+};
+
+everyone.now.extract_pic = function (link, callback) {
+    basil.extract_pic(link, callback);
 };
 
 // TODO: when users vanish do some cleaning up so as to not hold their group indefinitely
