@@ -11,6 +11,7 @@ var settings = require('./settings.js');
 var twitter = require('twitter');
 var async = require('async');
 var basil = require('./lib/basil.js');
+var unshortener = require('unshortener');
 
 var app = module.exports = express.createServer();
 
@@ -116,7 +117,7 @@ app.get('/data/tweets', function (req, res) {
 
     twit.get('/statuses/home_timeline.json',
              {include_entities: 1,
-              count: 500},
+              count: 50},
              function (data) {
                  require('fs').writeFile("./test/tweets.json",
                                          JSON.stringify(data));
@@ -125,8 +126,11 @@ app.get('/data/tweets', function (req, res) {
                                function (tweet, callback) {
                                    basil.get_pic_link(tweet, function (url) {
                                        if (url) {
-                                           tweet.image_link = url;
-                                           users[userId].now.show_tweets([tweet]);
+                                           unshortener.expand(url, function (url) {
+                                               console.log(url.href);
+                                               tweet.image_link = url.href;
+                                               users[userId].now.show_tweets([tweet]);
+                                           });
                                        }});
                                    callback(null);
                                },
