@@ -8,11 +8,21 @@ module.exports = {
     'get_pic_link': function () {
         var services = /instagr.am|yfrog.com|twitpic.com|picplz.com/;
 
-        for (var i=0; i<tweets.length; i++) {
+        var test = function (i) {
             basil.get_pic_link(tweets[i], function (url) {
-                assert.ok(url == null || url.match(services));
+                assert.ok(url == null || url.match(services), i+"::"+url);
             });
+        };
+
+        for (var i=0; i<tweets.length; i++) {
+            test(i);
         }
+    },
+
+    'pulsene.ws': function () {
+        basil.get_pic_link(tweets[32], function (url) {
+            assert.ok(url === null);
+        });
     },
 
     'extract_twitpic': function () {
