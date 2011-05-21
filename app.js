@@ -11,7 +11,6 @@ var settings = require('./settings.js');
 var twitter = require('twitter');
 var async = require('async');
 var basil = require('./lib/basil.js');
-var unshortener = require('unshortener');
 
 var app = module.exports = express.createServer();
 
@@ -126,12 +125,9 @@ app.get('/data/tweets', function (req, res) {
                                function (tweet, callback) {
                                    basil.get_pic_link(tweet, function (url) {
                                        if (url) {
-                                           unshortener.expand(url, function (url) {
-                                               console.log(url.href);
-                                               tweet.image_link = url.href;
-                                               tweet.image_url = '';
-                                               users[userId].now.show_tweets([tweet]);
-                                           });
+                                           tweet.image_link = url.href;
+                                           tweet.image_url = '';
+                                           users[userId].now.show_tweets([tweet]);
                                        }});
                                    callback(null);
                                },
