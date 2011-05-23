@@ -43,7 +43,7 @@ function require_twitter_login(req, res, next) {
     next();
 };
 
-var everyone = nowjs.initialize(app, {host: 'justhepics.com', port: 80});
+var everyone = nowjs.initialize(app);
 var users = [];
 
 // Routes
@@ -64,8 +64,8 @@ app.get("/twitter_login", function (req, res) {
                        "HMAC-SHA1");
     oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret, results) {
         if (error) {
-            console.log('error');
-            console.log(error);
+            console.log('error twitter login');
+            //console.log(error);
         }else{
             req.session.oauth_token = oauth_token;
             req.session.oauth_token_secret = oauth_token_secret;
@@ -116,7 +116,7 @@ app.get('/data/tweets', function (req, res) {
 
     twit.get('/statuses/home_timeline.json',
              {include_entities: 1,
-              count: 50},
+              count: 200},
              function (data) {
                  require('fs').writeFile("./test/tweets.json",
                                          JSON.stringify(data));
@@ -125,7 +125,8 @@ app.get('/data/tweets', function (req, res) {
                                function (tweet, callback) {
                                    basil.get_pic_link(tweet, function (url) {
                                        if (url) {
-                                           tweet.image_link = url.href;
+                                           console.log(url);
+                                           tweet.image_link = url;
                                            tweet.image_url = '';
                                            users[userId].now.show_tweets([tweet]);
                                        }});

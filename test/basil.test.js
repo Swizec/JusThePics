@@ -25,6 +25,19 @@ module.exports = {
         });
     },
 
+    'extract_yfrog': function (beforeExit) {
+        var fired = false;
+        basil.extract_pic('http://yfrog.com/0g6i6xv3j', function (url) {
+            fired = true;
+            assert.equal(url,
+                         'http://img16.imageshack.us/img16/733/6i6xv3.jpg');
+        });
+
+	beforeExit(function () {
+	    assert.equal(fired, true);
+	});
+    },
+
     'extract_twitpic': function () {
         assert.fail();
         var link = 'http://twitpic.com/4xha23';
@@ -35,6 +48,7 @@ module.exports = {
     },
 
     'extract_instagram': function () {
+        assert.fail();
         var link = 'http://instagr.am/p/EQAYn/';
 
         basil.extract_pic(link, function (url) {
@@ -43,6 +57,7 @@ module.exports = {
     },
 
     'extract_random': function () {
+        assert.fail();
         basil.extract_pic('http://swizec.com/blog/using-prime-numbers-to-generate-pretty-trees/swizec/1705',
                           function (url) {
                               console.log(url);
