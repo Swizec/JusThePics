@@ -8,6 +8,7 @@ $(function(){
 
         get_image: function () {
             var self = this;
+            console.log(this.attributes.image_link);
             now.extract_pic(this.attributes.image_link, function (url) {
                 self.set({image_url: url});
             });
