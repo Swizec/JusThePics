@@ -6,7 +6,7 @@ var tweets = JSON.parse(require('fs').readFileSync('./test/tweets.json'));
 
 module.exports = {
     'get_pic_link': function () {
-        var services = /instagr.am|yfrog.com|twitpic.com|picplz.com/;
+        var services = /instagr.am|yfrog.com|twitpic.com|picplz.com|imgur.com|i.imgur.com/;
 
         var test = function (i) {
             basil.get_pic_link(tweets[i], function (url) {
