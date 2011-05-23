@@ -43,7 +43,7 @@ function require_twitter_login(req, res, next) {
     next();
 };
 
-var everyone = nowjs.initialize(app);
+var everyone = nowjs.initialize(app, {host: 'justhepics.com', port: 80});
 var users = [];
 
 // Routes
