@@ -121,7 +121,7 @@ app.get('/data/tweets', function (req, res) {
                  require('fs').writeFile("./test/tweets.json",
                                          JSON.stringify(data));
 
-                 async.forEach(data,
+                 async.forEachSeries(data,
                                function (tweet, callback) {
                                    basil.get_pic_link(tweet, function (url) {
                                        if (url) {
